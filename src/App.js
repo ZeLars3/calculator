@@ -1,9 +1,13 @@
-const App = () => {
+import { Fragment } from 'react'
+
+import { Calculator } from './components/Calculator'
+import { Header } from './components/Header'
+
+export const App = () => {
   return (
-    <div>
-      <h1></h1>
-    </div>
+    <Fragment>
+      <Header />
+      <Calculator />
+    </Fragment>
   )
 }
-
-export default App
