@@ -1,0 +1,4 @@
+const HOME_PAGE_ROUTE = '/'
+const SETTINGS_PAGE_ROUTE = '/settings'
+
+export { HOME_PAGE_ROUTE, SETTINGS_PAGE_ROUTE }

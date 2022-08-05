@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
 const HeaderBlock = styled.header`
   background-color: #434343;
@@ -15,7 +16,7 @@ const HeaderNav = styled.ul`
   display: flex;
 `
 
-const HeaderLink = styled.li`
+const HeaderItem = styled.li`
   list-style-type: none;
   font-size: 28px;
   font-width: 100;
@@ -32,8 +33,27 @@ const HeaderLink = styled.li`
   }
 `
 
+const StyledNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: #707070;
+  font-size: 28px;
+  font-weight: bold;
+  font-width: 100;
+
+  &.active {
+    color: white;
+    text-decoration: underline;
+  }
+`
+
 const HeaderTitle = styled.h1`
   font-size: 30px;
 `
 
-export { HeaderBlock, HeaderNav, HeaderLink, HeaderTitle }
+export {
+  HeaderBlock,
+  HeaderNav,
+  HeaderTitle,
+  HeaderItem,
+  StyledNavLink,
+}
