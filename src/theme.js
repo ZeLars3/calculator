@@ -6,9 +6,11 @@ const font = 'Helvetica Neue'
 const black = '#000000'
 const white = '#ffffff'
 const error = '#c86464'
-const primary = '#c06c84'
-const secondary = '#6c5b7b'
-const secondaryLight = '#6a6b7b'
+const lightGray = '#a0a0a0'
+const gray = '#707070'
+const darkGray = '#434343'
+const light = '#f5f5f5'
+const yellowGreen = '#9ACD32'
 
 const boxShadows = [
   'box-shadow: 0px 4px 24px -8px rgba(0,0,0,0.75)',
@@ -39,7 +41,7 @@ const below = Object.keys(size).reduce((acc, label) => {
   return acc
 }, {})
 
-export default {
+const theme = {
   above,
   below,
   boxShadows,
@@ -47,11 +49,75 @@ export default {
   spaces: [0, 4, 8, 16, 32, 64, 128],
   fontSizes: [12, 14, 16, 20, 24, 32, 40, 56, 72, 80],
   colors: {
-    primary,
-    secondary,
-    secondaryLight,
-    black,
-    white,
+    yellowGreen,
+    light,
+    gray,
+    darkGray,
+    lightGray,
     error,
+    white,
+    black,
   },
 }
+
+const lightTheme = {
+  ...theme,
+  colors: {
+    primary: light,
+    hover: gray,
+  },
+  textColor: {
+    primary: white,
+  },
+  button: {
+    primary: white,
+  },
+  navBar: {
+    primary: darkGray,
+  },
+  backgroundColor: {
+    primary: white,
+  },
+}
+
+const darkTheme = {
+  ...theme,
+  colors: {
+    primary: light,
+    hover: gray,
+  },
+  textColor: {
+    primary: white,
+  },
+  button: {
+    primary: white,
+  },
+  navBar: {
+    primary: darkGray,
+  },
+  backgroundColor: {
+    primary: lightGray,
+  },
+}
+
+const coloredTheme = {
+  ...theme,
+  colors: {
+    primary: yellowGreen,
+    hover: gray,
+  },
+  textColor: {
+    primary: white,
+  },
+  button: {
+    primary: yellowGreen,
+  },
+  navBar: {
+    primary: yellowGreen,
+  },
+  backgroundColor: {
+    primary: white,
+  },
+}
+
+export { theme, darkTheme, lightTheme, coloredTheme }

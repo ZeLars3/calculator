@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const SettingContainer = styled.div`
   height: 560px;
-  background-color: white;
+  background: white;
   display: flex;
   flex-direction: column;
   padding: 30px 40px;
@@ -30,9 +30,11 @@ const ClearButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   text-align: start;
+  background: ${({ theme }) => theme.navBar.primary};
+  color: ${({ theme }) => theme.textColor.primary};
 
   &:hover {
-    background-color: #4d4d4d;
+    background: ${({ theme }) => theme.colors.hover};
     color: white;
   }
 `
@@ -43,10 +45,16 @@ const SettingTitle = styled.h1`
   font-family: 'Kanit', sans-serif;
 `
 
+const Settingtext = styled.p`
+  font-size: 18px;
+  font-family: 'Kanit', sans-serif;
+`
+
 export {
   SettingContainer,
   OptionChange,
   SelectList,
   ClearButton,
   SettingTitle,
+  Settingtext,
 }

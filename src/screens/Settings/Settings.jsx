@@ -1,28 +1,28 @@
-import { useState } from 'react'
-
 import {
   SettingContainer,
   OptionChange,
   SelectList,
   SettingTitle,
   ClearButton,
+  Settingtext,
 } from './index'
 
-export const Settings = () => {
-  const [value, setValue] = useState('light')
-
+export const Settings = props => {
   return (
     <SettingContainer>
       <SettingTitle>Settings</SettingTitle>
-      <p>Switch Theme</p>
-      <SelectList value={value}>
+      <Settingtext>Switch Theme</Settingtext>
+      <SelectList
+        onChange={e => {
+          props.handleThemeChange(e)
+        }}>
         <OptionChange value="light">
-          Ligth Theme
-        </OptionChange>
-        <OptionChange value="colored">
-          Colored Theme
+          Light Theme
         </OptionChange>
         <OptionChange value="dark">Dark Theme</OptionChange>
+        <OptionChange value="color">
+          Colored Theme
+        </OptionChange>
       </SelectList>
       <ClearButton>Clear All History</ClearButton>
     </SettingContainer>

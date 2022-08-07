@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 const MainContainer = styled.div`
-  background-color: white;
+  background: ${({ theme }) =>
+    theme.backgroundColor.primary};
   display: grid;
   grid-template-columns: 3fr 1fr;
   padding: 5px 15px;
@@ -14,7 +15,6 @@ const LeftSide = styled.div`
 `
 
 const HistoryButton = styled.button`
-  background-color: #434343;
   border: none;
   border-radius: 5px;
   color: white;
@@ -23,9 +23,12 @@ const HistoryButton = styled.button`
   padding: 5px;
   margin: 5px;
   max-width: 200px;
+  background: ${({ theme }) => theme.navBar.primary};
+  color: ${({ theme }) => theme.textColor.primary};
 
   &:hover {
-    background-color: #b3b3b3;
+    background: ${({ theme }) => theme.colors.hover};
+    color: white;
   }
 `
 

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
 const HeaderBlock = styled.header`
-  background-color: #434343;
+  background: ${({ theme }) => theme.navBar.primary};
   color: white;
   display: flex;
   justify-content: space-between;
@@ -25,7 +25,6 @@ const HeaderItem = styled.li`
   &:hover {
     cursor: pointer;
     text-decoration: underline;
-    color: white;
   }
 
   &:first-child {
