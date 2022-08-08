@@ -1,5 +1,14 @@
-import DisplayInfo from './components'
+import { Fragment } from 'react'
 
-export const Display = () => {
-  return <DisplayInfo>123456789</DisplayInfo>
+import { DisplayInfo, DisplayResult } from './index'
+
+export const Display = props => {
+  const { input, result } = props
+
+  return (
+    <Fragment>
+      <DisplayResult>{result}</DisplayResult>
+      <DisplayInfo>{input}</DisplayInfo>
+    </Fragment>
+  )
 }

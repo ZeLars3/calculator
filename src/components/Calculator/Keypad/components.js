@@ -33,6 +33,15 @@ const KeypadButton = styled.button`
   font-size: 25px;
   cursor: pointer;
   margin: 15px 0;
+
+  &:hover {
+    background: darkgray;
+  }
+`
+
+const FunctionsButton = styled(KeypadButton)`
+  background: #fed766;
+  color: #fff;
 `
 
 const KeapadButtonEqual = styled(KeypadButton)`
@@ -45,4 +54,5 @@ export {
   KeypadRow,
   KeapadButtonEqual,
   KeypadLastRow,
+  FunctionsButton,
 }

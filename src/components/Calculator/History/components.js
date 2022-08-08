@@ -11,4 +11,20 @@ const Title = styled.h2`
   font-family: 'Kanit', sans-serif;
 `
 
-export { HistoryTab, Title }
+const HistoryList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`
+
+const HistoryItem = styled.li`
+  margin: 10px;
+  font-family: 'Kanit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid #707070;
+  padding-top: 10px;
+  `
+
+export { HistoryTab, Title, HistoryList, HistoryItem }

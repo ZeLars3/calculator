@@ -21,7 +21,7 @@ export const Header = () => {
           </StyledNavLink>
         </HeaderItem>
         <HeaderItem>
-          <StyledNavLink exact to={SETTINGS_PAGE_ROUTE}>
+          <StyledNavLink to={SETTINGS_PAGE_ROUTE}>
             Settings
           </StyledNavLink>
         </HeaderItem>
