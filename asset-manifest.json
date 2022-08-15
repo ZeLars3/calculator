@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/calculator/static/js/main.2291dc7d.js",
+    "static/js/787.a174f9e5.chunk.js": "/calculator/static/js/787.a174f9e5.chunk.js",
+    "index.html": "/calculator/index.html",
+    "main.2291dc7d.js.map": "/calculator/static/js/main.2291dc7d.js.map",
+    "787.a174f9e5.chunk.js.map": "/calculator/static/js/787.a174f9e5.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.2291dc7d.js"
+  ]
+}
