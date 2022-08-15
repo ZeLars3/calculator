@@ -2,13 +2,16 @@ import styled from 'styled-components'
 
 const HistoryTab = styled.div`
   padding: 20px;
-  border-left: 1px solid #707070;
+  border-left: 3px solid #707070;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  height: 100vh;
 `
 const Title = styled.h2`
   margin: 0 auto;
-  font-family: 'Kanit', sans-serif;
+  font: normal normal normal 32px/38px 'Kanit', sans-serif;
+  margin-bottom: 20px;
 `
 
 const HistoryList = styled.ul`
@@ -19,12 +22,9 @@ const HistoryList = styled.ul`
 
 const HistoryItem = styled.li`
   margin: 10px;
-  font-family: 'Kanit', sans-serif;
-  font-size: 1.2rem;
-  font-weight: bold;
+  font: normal normal normal 30px/36px 'Kanit', sans-serif;
   cursor: pointer;
-  border-bottom: 1px solid #707070;
-  padding-top: 10px;
-  `
+  padding-top: 5px;
+`
 
 export { HistoryTab, Title, HistoryList, HistoryItem }

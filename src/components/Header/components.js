@@ -7,8 +7,9 @@ const HeaderBlock = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px;
+  padding: 32px 42px;
   border: 1px solid #707070;
+  max-height: 120px;
   font-family: 'Kanit', sans-serif;
 `
 
@@ -18,7 +19,7 @@ const HeaderNav = styled.ul`
 
 const HeaderItem = styled.li`
   list-style-type: none;
-  font-size: 28px;
+  font-size: 32px;
   font-width: 100;
   color: #707070;
 
@@ -28,7 +29,7 @@ const HeaderItem = styled.li`
   }
 
   &:first-child {
-    margin-right: 30px;
+    margin-right: 32px;
   }
 `
 
@@ -46,7 +47,7 @@ const StyledNavLink = styled(NavLink)`
 `
 
 const HeaderTitle = styled.h1`
-  font-size: 30px;
+  font-size: 32px;
 `
 
 export {

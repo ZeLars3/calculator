@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import {
   Title,
   HistoryTab,
@@ -5,23 +7,25 @@ import {
   HistoryItem,
 } from './index'
 
-export const History = props => {
-  const { history } = props
-
+export const History = ({ history }) => {
   return (
     <HistoryTab>
       <Title>History</Title>
-      <div>
         {history.map((item, index) => {
           return (
             <HistoryList key={index}>
-              <HistoryItem>
-                {item.input} = {item.result}
-              </HistoryItem>
+              <HistoryItem>{item.input}</HistoryItem>
             </HistoryList>
           )
         })}
-      </div>
     </HistoryTab>
   )
+}
+
+History.defaultProps = {
+  history: [],
+}
+
+History.propTypes = {
+  history: PropTypes.array,
 }

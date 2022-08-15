@@ -1,9 +1,9 @@
+import PropTypes from 'prop-types'
+
 import {
   KeypadButton,
   KeypadContainer,
   KeypadRow,
-  KeapadButtonEqual,
-  KeypadLastRow,
   FunctionsButton,
 } from './index'
 
@@ -20,25 +20,10 @@ export const Keypad = props => {
     <KeypadContainer>
       <KeypadRow>
         <FunctionsButton
-          value="clearAll"
-          onClick={props.onClear}>
-          AC
-        </FunctionsButton>
-        <FunctionsButton
           value="clear"
           onClick={props.onDelete}>
           C
         </FunctionsButton>
-        <FunctionsButton
-          value="sign"
-          onClick={props.onToggleSign}>
-          +/-
-        </FunctionsButton>
-        <FunctionsButton value="/" onClick={handleOnOperator}>
-          ÷
-        </FunctionsButton>
-      </KeypadRow>
-      <KeypadRow>
         <KeypadButton value={7} onClick={handleOnDigit}>
           7
         </KeypadButton>
@@ -48,11 +33,18 @@ export const Keypad = props => {
         <KeypadButton value={9} onClick={handleOnDigit}>
           9
         </KeypadButton>
-        <FunctionsButton value="*" onClick={handleOnOperator}>
+        <FunctionsButton
+          value="*"
+          onClick={handleOnOperator}>
           x
         </FunctionsButton>
       </KeypadRow>
       <KeypadRow>
+        <FunctionsButton
+          value="-"
+          onClick={handleOnOperator}>
+          -
+        </FunctionsButton>
         <KeypadButton value={4} onClick={handleOnDigit}>
           4
         </KeypadButton>
@@ -62,11 +54,18 @@ export const Keypad = props => {
         <KeypadButton value={6} onClick={handleOnDigit}>
           6
         </KeypadButton>
-        <FunctionsButton value="-" onClick={handleOnOperator}>
-          -
+        <FunctionsButton
+          value="/"
+          onClick={handleOnOperator}>
+          ÷
         </FunctionsButton>
       </KeypadRow>
       <KeypadRow>
+        <FunctionsButton
+          value="+"
+          onClick={handleOnOperator}>
+          +
+        </FunctionsButton>
         <KeypadButton value={1} onClick={handleOnDigit}>
           1
         </KeypadButton>
@@ -76,25 +75,51 @@ export const Keypad = props => {
         <KeypadButton value={3} onClick={handleOnDigit}>
           3
         </KeypadButton>
-        <FunctionsButton value="+" onClick={handleOnOperator}>
-          +
-        </FunctionsButton>
-      </KeypadRow>
-      <KeypadLastRow>
-        <KeypadButton value={0} onClick={handleOnDigit}>
-          0
+        <KeypadButton value="=" onClick={props.onEqual}>
+          =
         </KeypadButton>
+      </KeypadRow>
+      <KeypadRow>
         <KeypadButton
           value="."
           onClick={props.onDecimalPoint}>
           .
         </KeypadButton>
-        <KeapadButtonEqual
-          value="="
-          onClick={props.onEqual}>
-          =
-        </KeapadButtonEqual>
-      </KeypadLastRow>
+        <FunctionsButton
+          value="clearAll"
+          onClick={props.onClear}>
+          CE
+        </FunctionsButton>
+        <FunctionsButton
+          value="sign"
+          onClick={props.onToggleSign}>
+          +/-
+        </FunctionsButton>
+        <KeypadButton value={0} onClick={handleOnDigit}>
+          0
+        </KeypadButton>
+        <KeypadButton />
+      </KeypadRow>
     </KeypadContainer>
   )
+}
+
+Keypad.defaultProps = {
+  onDigit: () => {},
+  onOperator: () => {},
+  onClear: () => {},
+  onDelete: () => {},
+  onToggleSign: () => {},
+  onDecimalPoint: () => {},
+  onEqual: () => {},
+}
+
+Keypad.propTypes = {
+  onDigit: PropTypes.func,
+  onOperator: PropTypes.func,
+  onClear: PropTypes.func,
+  onDelete: PropTypes.func,
+  onToggleSign: PropTypes.func,
+  onDecimalPoint: PropTypes.func,
+  onEqual: PropTypes.func,
 }

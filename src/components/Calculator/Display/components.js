@@ -1,16 +1,17 @@
 import styled from 'styled-components'
 
 const DisplayInfo = styled.p`
-  border-bottom: 1px solid #707070;
-  font-size: 1.5rem;
-  font-family: 'Kanit', sans-serif;
+  border-bottom: 3px solid #707070;
+  font: normal normal normal 64px/77px 'Kanit', sans-serif;
+  text-align: right;
+  padding-right: 40px;
 `
 
 const DisplayResult = styled.h6`
-  font-size: 2rem;
-  font-weight: bold;
   margin-top: 20px;
-  font-family: 'Kanit', sans-serif;
+  font: normal normal normal 64px/77px 'Kanit', sans-serif;
+  text-align: right;
+  padding-right: 40px;
 `
 
 export { DisplayInfo, DisplayResult }

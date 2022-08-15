@@ -7,30 +7,22 @@ const KeypadContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #f5f5f5;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
   padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
 `
 
 const KeypadRow = styled.div`
   display: grid;
   gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
-`
-
-const KeypadLastRow = styled(KeypadRow)`
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 410px;
+  grid-template-columns: repeat(5, 1fr);
 `
 
 const KeypadButton = styled.button`
-  width: 80px;
-  height: 80px;
-  border-radius: 20px;
-  font-size: 25px;
+  width: 150px;
+  height: 150px;
+  border-radius: 32px;
+  border: 1px solid #707070;
+  font: normal normal normal 64px/77px 'Kanit', sans-serif;
   cursor: pointer;
   margin: 15px 0;
 
@@ -44,15 +36,9 @@ const FunctionsButton = styled(KeypadButton)`
   color: #fff;
 `
 
-const KeapadButtonEqual = styled(KeypadButton)`
-  width: 190px;
-`
-
 export {
   KeypadContainer,
   KeypadButton,
   KeypadRow,
-  KeapadButtonEqual,
-  KeypadLastRow,
   FunctionsButton,
 }

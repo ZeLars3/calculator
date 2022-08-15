@@ -11,23 +11,23 @@ const SettingContainer = styled.div`
 const OptionChange = styled.option`
   font-size: 18px;
   border-radius: 5px;
-  border: 1px solid black;
+  border: 2px solid #434343;
 `
 const SelectList = styled.select`
-  max-width: 250px;
-  font-size: 18px;
-  margin-bottom: 15px;
-  padding: 10px;
+  max-width: 400px;
+  font: normal normal normal 32px/38px 'Kanit', sans-serif;
+  margin-bottom: 32px;
   border-radius: 5px;
   cursor: pointer;
+  padding: 28px 27px;
 `
 
 const ClearButton = styled.button`
-  max-width: 250px;
-  font-size: 18px;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 5px;
+  max-width: 400px;
+  font: normal normal normal 32px/38px 'Kanit', sans-serif;
+  border: 2px solid #434343;
+  padding: 28px 27px;
+  border-radius: 8px;
   cursor: pointer;
   text-align: start;
   background: ${({ theme }) => theme.navBar.primary};
@@ -40,14 +40,14 @@ const ClearButton = styled.button`
 `
 
 const SettingTitle = styled.h1`
-  font-size: 30px;
-  margin-bottom: 20px;
-  font-family: 'Kanit', sans-serif;
+  margin-bottom: 46px;
+  font: normal normal normal 64px/77px 'Kanit', sans-serif;
 `
 
 const Settingtext = styled.p`
   font-size: 18px;
   font-family: 'Kanit', sans-serif;
+  margin-bottom: 7px;
 `
 
 export {

@@ -1,83 +1,144 @@
-import { useState, Fragment } from 'react'
+import { Component, Fragment } from 'react'
 
 import { Display } from './Display'
 import { History } from './History'
 import { Keypad } from './Keypad'
-import {
-  MainContainer,
-  LeftSide,
-  HistoryButton,
-} from './index'
+import { ControlPanel } from './ControlPanel'
+import { MainContainer, LeftSide } from './index'
+import { CalculatorCore, Commands } from '../../utils/CalculatorCore'
 
-export const Calculator = () => {
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
-  const [history, setHistory] = useState([])
-  const [formula, setFormula] = useState([])
-  const [input, setInput] = useState('')
-  const [result, setResult] = useState('')
+const calculator = CalculatorCore()
 
-  const handleDigit = number => {
-    setInput(input + number)
-    setFormula(formula => [...formula, input])
+export class Calculator extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isHistoryOpen: false,
+      history: [],
+      formula: [],
+      input: '',
+      result: '',
+    }
+
+    this.handleDigit = this.handleDigit.bind(this)
+    this.handleClear = this.handleClear.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.handleToggleSign = this.handleToggleSign.bind(this)
+    this.handleOperator = this.handleOperator.bind(this)
+    this.handleDecimalPoint =
+      this.handleDecimalPoint.bind(this)
+    this.handleEqual = this.handleEqual.bind(this)
+    this.handleHistoryClick =
+      this.handleHistoryClick.bind(this)
+      this.handler = this.handler.bind(this)
   }
 
-  const handleClear = () => {
-    setInput('')
-    setFormula([])
-    setResult('')
+  handler(command, value) {
+    const number = parseInt(value, 10)
+
+    if (isNaN(number)) return
+
+    this.setState({
+      ...this.state,
+      formula: [...this.state.formula, value],
+      input: calculator.execute(new Commands[command](number)),
+    })
   }
 
-  const handleDelete = () => {
-    setInput(input.slice(0, -1))
+  handleDigit(number) {
+    this.setState(prevState => ({
+      input: prevState.input + number,
+      formula: prevState.formula.concat(number),
+    }))
   }
 
-  const handleHistoryClick = () => {
-    setIsHistoryOpen(!isHistoryOpen)
+  handleClear() {
+    this.setState({
+      input: '',
+      formula: [],
+      result: '',
+    })
   }
 
-  const handleToggleSign = () => {
-    setInput(input.charAt(0) === '-' ? input.slice(1) : '-' + input)
+  handleDelete() {
+    this.setState(prevState => ({
+      input: prevState.input.slice(0, -1),
+    }))
   }
 
-  const handleOperator = operator => {
-    setInput(input + operator)
+  handleToggleSign() {
+    this.setState(prevState => ({
+      input:
+        prevState.input.charAt(0) === '-'
+          ? prevState.input.slice(1)
+          : '-' + prevState.input,
+    }))
   }
 
-  const handleDecimalPoint = () => {
-    if (!input.includes('.')) {
-      setInput(input + '.')
+  handleOperator(operator) {
+    this.setState(prevState => ({
+      input: prevState.input + operator,
+    }))
+  }
+
+  handleDecimalPoint() {
+    if (!this.state.input.includes('.')) {
+      this.setState(prevState => ({
+        input: prevState.input + '.',
+      }))
     }
   }
 
-  const handleEqual = () => {
-    setResult(eval(input))
-    setHistory(history => [...history, { input, result }])
-    setInput('')
+  handleEqual() {
+    this.setState(prevState => ({
+      history: [
+        ...prevState.history,
+        {
+          input: prevState.input,
+          result: prevState.result,
+        },
+      ],
+      result: eval(prevState.input),
+      input: '',
+    }))
   }
 
-  return (
-    <Fragment>
-      <MainContainer>
-        <LeftSide>
-          <HistoryButton onClick={handleHistoryClick}>
-            {isHistoryOpen ? 'Hide' : 'Show'} history
-          </HistoryButton>
-          <Display
-            result={result}
-            input={input}
-            formula={formula}/>
-          <Keypad
-            onDigit={handleDigit}
-            onClear={handleClear}
-            onDelete={handleDelete}
-            onToggleSign={handleToggleSign}
-            onOperator={handleOperator}
-            onDecimalPoint={handleDecimalPoint}
-            onEqual={handleEqual}
-          />
-        </LeftSide>
-        {isHistoryOpen && <History  history={history}/>}
-      </MainContainer>
-    </Fragment>
-  )
+  handleHistoryClick() {
+    this.setState(prevState => ({
+      isHistoryOpen: !prevState.isHistoryOpen,
+    }))
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <MainContainer>
+          <LeftSide>
+            <ControlPanel
+              onHistoryClick={this.handleHistoryClick}
+            />
+            <Display
+              result={this.state.result}
+              input={this.state.input}
+            />
+            <Keypad
+              input={this.state.input}
+              onHandler={this.handler}
+              onDigit={this.handleDigit}
+              onClear={this.handleClear}
+              onDelete={this.handleDelete}
+              onToggleSign={this.handleToggleSign}
+              onOperator={this.handleOperator}
+              onDecimalPoint={this.handleDecimalPoint}
+              onEqual={this.handleEqual}
+            />
+          </LeftSide>
+          {this.state.isHistoryOpen && (
+            <History history={this.state.history} />
+          )}
+        </MainContainer>
+      </Fragment>
+    )
+  }
 }
