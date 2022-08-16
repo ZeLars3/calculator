@@ -25,10 +25,10 @@ const Commands = {
     return new Command(divide, multiply, value)
   },
 }
-const AddCommand = 'AddCommand',
-      SubCommand = 'SubCommand',
-      MulCommand = 'MulCommand',
-      DivCommand = 'DivCommand'
+const AddCommand = '+',
+  SubCommand = '-',
+  MulCommand = '*',
+  DivCommand = '/'
 
 const CalculatorCore = () => {
   const commands = []
@@ -41,7 +41,7 @@ const CalculatorCore = () => {
       return value
     },
     undo: () => {
-      var command = commands.pop()
+      const command = commands.pop()
       if (commands.length === 0) {
         return 0
       }
@@ -52,11 +52,46 @@ const CalculatorCore = () => {
   }
 }
 
-export {
-  CalculatorCore,
-  Commands,
-  AddCommand,
-  SubCommand,
-  MulCommand,
-  DivCommand,
+const operations = (value, operand, currentValue) => {
+  switch (operand) {
+    case Commands.AddCommand:
+      return add(value, currentValue)
+    case Commands.SubCommand:
+      return subtract(value, currentValue)
+    case Commands.MulCommand:
+      return multiply(value, currentValue)
+    case Commands.DivCommand:
+      return divide(value, currentValue)
+    default:
+      return value
+  }
 }
+
+const calculatorLogic = (expression = '') => {
+  const calculator = CalculatorCore()
+
+  const expressionArray = expression.split(' ')
+  const expressionLength = expressionArray.length
+  let currentValue = 0
+  let operand = ''
+  let value = 0
+  const result = 0
+
+  for (let i = 0; i < expressionLength; i++) {
+    const currentExpression = expressionArray[i]
+    if (currentExpression === AddCommand ||
+        currentExpression === SubCommand ||
+        currentExpression === MulCommand ||
+        currentExpression === DivCommand
+        ) {
+      operand = currentExpression
+      value = currentValue
+      currentValue = 0
+    } else {
+      currentValue = parseInt(currentExpression)
+    }
+  }
+  return result
+}
+
+export { calculatorLogic }

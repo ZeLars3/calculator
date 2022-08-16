@@ -5,9 +5,9 @@ import { History } from './History'
 import { Keypad } from './Keypad'
 import { ControlPanel } from './ControlPanel'
 import { MainContainer, LeftSide } from './index'
-import { CalculatorCore, Commands } from '../../utils/CalculatorCore'
+import { calculatorLogic } from '../../utils/CalculatorCore'
 
-const calculator = CalculatorCore()
+const calculator = calculatorLogic()
 
 export class Calculator extends Component {
   constructor(props) {
@@ -31,19 +31,6 @@ export class Calculator extends Component {
     this.handleEqual = this.handleEqual.bind(this)
     this.handleHistoryClick =
       this.handleHistoryClick.bind(this)
-      this.handler = this.handler.bind(this)
-  }
-
-  handler(command, value) {
-    const number = parseInt(value, 10)
-
-    if (isNaN(number)) return
-
-    this.setState({
-      ...this.state,
-      formula: [...this.state.formula, value],
-      input: calculator.execute(new Commands[command](number)),
-    })
   }
 
   handleDigit(number) {
@@ -77,9 +64,20 @@ export class Calculator extends Component {
   }
 
   handleOperator(operator) {
-    this.setState(prevState => ({
-      input: prevState.input + operator,
-    }))
+    const lastChar = this.state.input[this.state.input.length - 1]
+    const isOperator = ['+', '-', '*', '/'].includes(lastChar)
+
+    if (isOperator) {
+      this.setState(prevState => ({
+        input: prevState.input.slice(0, -1) + operator,
+        formula: prevState.formula.concat(operator),
+      }))
+    } else {
+      this.setState(prevState => ({
+        input: prevState.input + operator,
+        formula: prevState.formula.concat(operator),
+      }))
+    }
   }
 
   handleDecimalPoint() {
@@ -123,8 +121,6 @@ export class Calculator extends Component {
               input={this.state.input}
             />
             <Keypad
-              input={this.state.input}
-              onHandler={this.handler}
               onDigit={this.handleDigit}
               onClear={this.handleClear}
               onDelete={this.handleDelete}
