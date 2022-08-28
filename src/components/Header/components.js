@@ -22,14 +22,15 @@ const HeaderItem = styled.li`
   font-size: 32px;
   font-width: 100;
   color: #707070;
+  margin-right: 32px;
 
   &:hover {
     cursor: pointer;
     text-decoration: underline;
   }
 
-  &:first-child {
-    margin-right: 32px;
+  &:last-child {
+    margin-right: 0px;
   }
 `
 

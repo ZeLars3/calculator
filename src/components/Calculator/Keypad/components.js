@@ -17,6 +17,11 @@ const KeypadRow = styled.div`
   grid-template-columns: repeat(5, 1fr);
 `
 
+const LastKeypadRow = styled(KeypadRow)`
+  grid-template-columns: repeat(6, 1fr);
+  max-width: 870px;
+`
+
 const KeypadButton = styled.button`
   width: 150px;
   height: 150px;
@@ -31,6 +36,10 @@ const KeypadButton = styled.button`
   }
 `
 
+const BracketButton = styled(KeypadButton)`
+  width: 75px;
+`
+
 const FunctionsButton = styled(KeypadButton)`
   background: #fed766;
   color: #fff;
@@ -41,4 +50,6 @@ export {
   KeypadButton,
   KeypadRow,
   FunctionsButton,
+  BracketButton,
+  LastKeypadRow,
 }

@@ -1,107 +1,152 @@
 import PropTypes from 'prop-types'
+import { Component } from 'react'
 
 import {
   KeypadButton,
   KeypadContainer,
   KeypadRow,
   FunctionsButton,
+  BracketButton,
+  LastKeypadRow,
 } from './index'
 
-export const Keypad = props => {
-  const handleOnDigit = e => {
-    props.onDigit(e.target.value)
+export class Keypad extends Component {
+  constructor(props) {
+    super(props)
+
+    this.handleOnDigit = this.handleOnDigit.bind(this)
+    this.handleOnOperator = this.handleOnOperator.bind(this)
   }
 
-  const handleOnOperator = e => {
-    props.onOperator(e.target.value)
+  handleOnDigit(e) {
+    this.props.onDigit(e.target.value)
   }
 
-  return (
-    <KeypadContainer>
-      <KeypadRow>
-        <FunctionsButton
-          value="clear"
-          onClick={props.onDelete}>
-          C
-        </FunctionsButton>
-        <KeypadButton value={7} onClick={handleOnDigit}>
-          7
-        </KeypadButton>
-        <KeypadButton value={8} onClick={handleOnDigit}>
-          8
-        </KeypadButton>
-        <KeypadButton value={9} onClick={handleOnDigit}>
-          9
-        </KeypadButton>
-        <FunctionsButton
-          value="*"
-          onClick={handleOnOperator}>
-          x
-        </FunctionsButton>
-      </KeypadRow>
-      <KeypadRow>
-        <FunctionsButton
-          value="-"
-          onClick={handleOnOperator}>
-          -
-        </FunctionsButton>
-        <KeypadButton value={4} onClick={handleOnDigit}>
-          4
-        </KeypadButton>
-        <KeypadButton value={5} onClick={handleOnDigit}>
-          5
-        </KeypadButton>
-        <KeypadButton value={6} onClick={handleOnDigit}>
-          6
-        </KeypadButton>
-        <FunctionsButton
-          value="/"
-          onClick={handleOnOperator}>
-          ÷
-        </FunctionsButton>
-      </KeypadRow>
-      <KeypadRow>
-        <FunctionsButton
-          value="+"
-          onClick={handleOnOperator}>
-          +
-        </FunctionsButton>
-        <KeypadButton value={1} onClick={handleOnDigit}>
-          1
-        </KeypadButton>
-        <KeypadButton value={2} onClick={handleOnDigit}>
-          2
-        </KeypadButton>
-        <KeypadButton value={3} onClick={handleOnDigit}>
-          3
-        </KeypadButton>
-        <KeypadButton value="=" onClick={props.onEqual}>
-          =
-        </KeypadButton>
-      </KeypadRow>
-      <KeypadRow>
-        <KeypadButton
-          value="."
-          onClick={props.onDecimalPoint}>
-          .
-        </KeypadButton>
-        <FunctionsButton
-          value="clearAll"
-          onClick={props.onClear}>
-          CE
-        </FunctionsButton>
-        <FunctionsButton
-          value="sign"
-          onClick={props.onToggleSign}>
-          +/-
-        </FunctionsButton>
-        <KeypadButton value={0} onClick={handleOnDigit}>
-          0
-        </KeypadButton>
-        <KeypadButton />
-      </KeypadRow>
-    </KeypadContainer>
-  )
+  handleOnOperator(e) {
+    this.props.onOperator(e.target.value)
+  }
+
+  render() {
+    const {
+      onDelete,
+      onEqual,
+      onDecimalPoint,
+      onClear,
+      onToggleSign,
+    } = this.props
+
+    return (
+      <KeypadContainer>
+        <KeypadRow>
+          <FunctionsButton value="clear" onClick={onDelete}>
+            C
+          </FunctionsButton>
+          <KeypadButton
+            value={7}
+            onClick={this.handleOnDigit}>
+            7
+          </KeypadButton>
+          <KeypadButton
+            value={8}
+            onClick={this.handleOnDigit}>
+            8
+          </KeypadButton>
+          <KeypadButton
+            value={9}
+            onClick={this.handleOnDigit}>
+            9
+          </KeypadButton>
+          <FunctionsButton
+            value="*"
+            onClick={this.handleOnOperator}>
+            x
+          </FunctionsButton>
+        </KeypadRow>
+        <KeypadRow>
+          <FunctionsButton
+            value="-"
+            onClick={this.handleOnOperator}>
+            -
+          </FunctionsButton>
+          <KeypadButton
+            value={4}
+            onClick={this.handleOnDigit}>
+            4
+          </KeypadButton>
+          <KeypadButton
+            value={5}
+            onClick={this.handleOnDigit}>
+            5
+          </KeypadButton>
+          <KeypadButton
+            value={6}
+            onClick={this.handleOnDigit}>
+            6
+          </KeypadButton>
+          <FunctionsButton
+            value="/"
+            onClick={this.handleOnOperator}>
+            ÷
+          </FunctionsButton>
+        </KeypadRow>
+        <KeypadRow>
+          <FunctionsButton
+            value="+"
+            onClick={this.handleOnOperator}>
+            +
+          </FunctionsButton>
+          <KeypadButton
+            value={1}
+            onClick={this.handleOnDigit}>
+            1
+          </KeypadButton>
+          <KeypadButton
+            value={2}
+            onClick={this.handleOnDigit}>
+            2
+          </KeypadButton>
+          <KeypadButton
+            value={3}
+            onClick={this.handleOnDigit}>
+            3
+          </KeypadButton>
+          <KeypadButton value="=" onClick={onEqual}>
+            =
+          </KeypadButton>
+        </KeypadRow>
+        <LastKeypadRow>
+          <KeypadButton value="." onClick={onDecimalPoint}>
+            .
+          </KeypadButton>
+          <FunctionsButton
+            value="clearAll"
+            onClick={onClear}>
+            CE
+          </FunctionsButton>
+          <FunctionsButton
+            value="sign"
+            onClick={onToggleSign}>
+            +/-
+          </FunctionsButton>
+          <KeypadButton
+            value={0}
+            onClick={this.handleOnDigit}>
+            0
+          </KeypadButton>
+          <BracketButton
+            value="("
+            onClick={this.handleOnOperator}>
+            (
+          </BracketButton>
+          <BracketButton
+            value=")"
+            onClick={this.handleOnOperator}>
+            )
+          </BracketButton>
+        </LastKeypadRow>
+      </KeypadContainer>
+    )
+  }
 }
 
 Keypad.defaultProps = {

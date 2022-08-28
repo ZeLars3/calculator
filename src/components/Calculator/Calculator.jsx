@@ -1,13 +1,12 @@
-import { Component, Fragment } from 'react'
+import { Component } from 'react'
 
 import { Display } from './Display'
 import { History } from './History'
 import { Keypad } from './Keypad'
 import { ControlPanel } from './ControlPanel'
 import { MainContainer, LeftSide } from './index'
-import { calculatorLogic } from '../../utils/CalculatorCore'
-
-const calculator = calculatorLogic()
+import { expressionCalculator } from '../../utils/CalculatorCore'
+import { calculateInput } from '../../helpers'
 
 export class Calculator extends Component {
   constructor(props) {
@@ -64,8 +63,11 @@ export class Calculator extends Component {
   }
 
   handleOperator(operator) {
-    const lastChar = this.state.input[this.state.input.length - 1]
-    const isOperator = ['+', '-', '*', '/'].includes(lastChar)
+    const lastChar =
+      this.state.input[this.state.input.length - 1]
+    const isOperator = ['+', '-', '*', '/'].includes(
+      lastChar,
+    )
 
     if (isOperator) {
       this.setState(prevState => ({
@@ -97,7 +99,9 @@ export class Calculator extends Component {
           result: prevState.result,
         },
       ],
-      result: eval(prevState.input),
+      result: expressionCalculator(
+        calculateInput(prevState.input),
+      ),
       input: '',
     }))
   }
@@ -109,17 +113,16 @@ export class Calculator extends Component {
   }
 
   render() {
+    const { result, input, history } = this.state
+
     return (
-      <Fragment>
+      <>
         <MainContainer>
           <LeftSide>
             <ControlPanel
               onHistoryClick={this.handleHistoryClick}
             />
-            <Display
-              result={this.state.result}
-              input={this.state.input}
-            />
+            <Display result={result} input={input} />
             <Keypad
               onDigit={this.handleDigit}
               onClear={this.handleClear}
@@ -131,10 +134,10 @@ export class Calculator extends Component {
             />
           </LeftSide>
           {this.state.isHistoryOpen && (
-            <History history={this.state.history} />
+            <History history={history} />
           )}
         </MainContainer>
-      </Fragment>
+      </>
     )
   }
 }

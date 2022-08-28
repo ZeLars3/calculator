@@ -1,15 +1,23 @@
-import { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Component } from 'react'
 
 import { DisplayInfo, DisplayResult } from './index'
 
-export const Display = ({ input, result }) => {
-  return (
-    <Fragment>
-      <DisplayResult>{result}</DisplayResult>
-      <DisplayInfo>{input}</DisplayInfo>
-    </Fragment>
-  )
+export class Display extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const { result, input } = this.props
+
+    return (
+      <>
+        <DisplayResult>{result}</DisplayResult>
+        <DisplayInfo>{input}</DisplayInfo>
+      </>
+    )
+  }
 }
 
 Display.defaultProps = {

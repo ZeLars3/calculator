@@ -1,6 +1,8 @@
 import {
-  HOME_PAGE_ROUTE,
-  SETTINGS_PAGE_ROUTE,
+  HOME_PAGE_ROUTE_CL,
+  HOME_PAGE_ROUTE_FC,
+  SETTINGS_PAGE_ROUTE_CL,
+  SETTINGS_PAGE_ROUTE_FC,
 } from '../../constants'
 import {
   HeaderBlock,
@@ -16,13 +18,23 @@ export const Header = () => {
       <HeaderTitle>Calculator App</HeaderTitle>
       <HeaderNav>
         <HeaderItem>
-          <StyledNavLink to={HOME_PAGE_ROUTE}>
-            Home
+          <StyledNavLink to={HOME_PAGE_ROUTE_CL}>
+            Home (CL)
           </StyledNavLink>
         </HeaderItem>
         <HeaderItem>
-          <StyledNavLink to={SETTINGS_PAGE_ROUTE}>
-            Settings
+          <StyledNavLink to={HOME_PAGE_ROUTE_FC}>
+            Home (FC)
+          </StyledNavLink>
+        </HeaderItem>
+        <HeaderItem>
+          <StyledNavLink to={SETTINGS_PAGE_ROUTE_CL}>
+            Settings (CL)
+          </StyledNavLink>
+        </HeaderItem>
+        <HeaderItem>
+          <StyledNavLink to={SETTINGS_PAGE_ROUTE_FC}>
+            Settings (FC)
           </StyledNavLink>
         </HeaderItem>
       </HeaderNav>

@@ -1,16 +1,22 @@
 import PropTypes from 'prop-types'
+import { Component } from 'react'
 
 import { HistoryButton } from './index'
 
-export const ControlPanel = ({
-  isHistoryOpen,
-  onHistoryClick,
-}) => {
-  return (
-    <HistoryButton onClick={onHistoryClick}>
-      {isHistoryOpen ? 'Hide' : 'Show'} history
-    </HistoryButton>
-  )
+export class ControlPanel extends Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const { onHistoryClick, isHistoryOpen } = this.props
+
+    return (
+      <HistoryButton onClick={onHistoryClick}>
+        {isHistoryOpen ? 'Hide' : 'Show'} history
+      </HistoryButton>
+    )
+  }
 }
 
 ControlPanel.defaultProps = {

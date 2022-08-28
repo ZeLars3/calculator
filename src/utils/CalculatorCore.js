@@ -1,44 +1,51 @@
+import { ERROR_BRACKETS, DIVIDE_ZERO } from '../constants'
+
 const add = (x, y) => x + y
 const subtract = (x, y) => x - y
 const multiply = (x, y) => x * y
 const divide = (x, y) => x / y
 
 class Command {
-  constructor(execute, undo, value) {
+  constructor(execute, undo, value, current) {
     this.execute = execute
     this.undo = undo
     this.value = value
+    this.current = current
   }
 }
 
-const Commands = {
-  AddCommand: function (value) {
-    return new Command(add, subtract, value)
-  },
-  SubCommand: function (value) {
-    return new Command(subtract, add, value)
-  },
-  MulCommand: function (value) {
-    return new Command(multiply, divide, value)
-  },
-  DivCommand: function (value) {
-    return new Command(divide, multiply, value)
-  },
-}
 const AddCommand = '+',
   SubCommand = '-',
   MulCommand = '*',
   DivCommand = '/'
 
-const CalculatorCore = () => {
+const Commands = {
+  AddCommand: function (value, current) {
+    return new Command(add, subtract, value, current)
+  },
+  SubCommand: function (value, current) {
+    return new Command(subtract, add, value, current)
+  },
+  MulCommand: function (value, current) {
+    return new Command(multiply, divide, value, current)
+  },
+  DivCommand: function (value, current) {
+    return new Command(divide, multiply, value, current)
+  },
+}
+
+function calculatorCore() {
   const commands = []
-  let value = 0
+  let current = 0
 
   return {
     execute: command => {
-      value = command.execute(value, command.value)
+      current = command.execute(
+        command.current,
+        command.value,
+      )
       commands.push(command)
-      return value
+      return current
     },
     undo: () => {
       const command = commands.pop()
@@ -46,52 +53,108 @@ const CalculatorCore = () => {
         return 0
       }
 
-      value = command.undo(value, command.value)
-      return value
+      current = command.undo(current, command.value)
+      return current
     },
   }
 }
 
 const operations = (value, operand, currentValue) => {
   switch (operand) {
-    case Commands.AddCommand:
-      return add(value, currentValue)
-    case Commands.SubCommand:
-      return subtract(value, currentValue)
-    case Commands.MulCommand:
-      return multiply(value, currentValue)
-    case Commands.DivCommand:
-      return divide(value, currentValue)
+    case AddCommand:
+      return new Commands.AddCommand(value, currentValue)
+    case SubCommand:
+      return new Commands.SubCommand(value, currentValue)
+    case MulCommand:
+      return new Commands.MulCommand(value, currentValue)
+    case DivCommand:
+      return new Commands.DivCommand(value, currentValue)
     default:
-      return value
+      return 0
   }
 }
 
-const calculatorLogic = (expression = '') => {
-  const calculator = CalculatorCore()
+const expressionCalculator = input => {
+  const calculator = new calculatorCore()
+  const calcPriority = {
+    '+': 1,
+    '-': 1,
+    '*': 2,
+    '/': 2,
+  }
+  const firstItem = []
+  const stack = []
+  const inputArr = input
+    .split('')
+    .filter(digit => digit != ' ')
 
-  const expressionArray = expression.split(' ')
-  const expressionLength = expressionArray.length
-  let currentValue = 0
-  let operand = ''
-  let value = 0
-  const result = 0
-
-  for (let i = 0; i < expressionLength; i++) {
-    const currentExpression = expressionArray[i]
-    if (currentExpression === AddCommand ||
-        currentExpression === SubCommand ||
-        currentExpression === MulCommand ||
-        currentExpression === DivCommand
-        ) {
-      operand = currentExpression
-      value = currentValue
-      currentValue = 0
-    } else {
-      currentValue = parseInt(currentExpression)
+  for (let i = 0; i < inputArr.length; i++) {
+    if (+inputArr[i] >= 0 && +inputArr[i - 1] >= 0) {
+      inputArr[i - 1] = inputArr[i - 1] + inputArr[i]
+      inputArr.splice(i, 1)
+      i -= 1
     }
   }
-  return result
+
+  for (let i = 0; i < inputArr.length; i++) {
+    if (+inputArr[i] >= 0) firstItem.push(+inputArr[i])
+    else if (inputArr[i] === '.') {
+      firstItem.push(inputArr[i])
+    } else if (inputArr[i] === '(') stack.push(inputArr[i])
+    else if (inputArr[i] === ')') {
+      while (stack[stack.length - 1] != '(') {
+        if (stack.length < 1)
+          throw new Error(ERROR_BRACKETS)
+        firstItem.push(stack.pop())
+      }
+      stack.pop()
+    } else if (
+      inputArr[i] === AddCommand ||
+      inputArr[i] === SubCommand ||
+      inputArr[i] === MulCommand ||
+      inputArr[i] === DivCommand
+    ) {
+      while (
+        calcPriority[[stack[stack.length - 1]]] >=
+        calcPriority[inputArr[i]]
+      )
+        firstItem.push(stack.pop())
+      stack.push(inputArr[i])
+    }
+  }
+
+  while (stack.length > 0) firstItem.push(stack.pop())
+  if (firstItem.includes('('))
+    throw new Error(ERROR_BRACKETS)
+  if (inputArr.length === 1) {
+    for (let i = 0; i < firstItem.length; i++) {
+      if (typeof firstItem[i] === Number)
+        stack.push(firstItem[i])
+      else {
+        stack.push(
+          calculator.execute(
+            operations(
+              stack.pop(),
+              stack.pop(),
+              firstItem[i],
+            ),
+          ),
+        )
+
+        if (stack[stack.length - 1] === Infinity)
+          throw new Error(DIVIDE_ZERO)
+      }
+    }
+  } else {
+    if (inputArr[inputArr.length - 1] >= 0) {
+      return inputArr.reduce(
+        (previousValue, currentValue) =>
+          previousValue + currentValue,
+        '',
+      )
+    }
+  }
+  return inputArr[0]
 }
 
-export { calculatorLogic }
+export { expressionCalculator }
