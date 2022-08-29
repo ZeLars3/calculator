@@ -7,6 +7,7 @@ import { ControlPanel } from './ControlPanel'
 import { MainContainer, LeftSide } from './index'
 import { expressionCalculator } from '../../utils/CalculatorCore'
 import { calculateInput } from '../../helpers'
+import { ErrorBoundary } from '../ErrorBoundary'
 
 export class Calculator extends Component {
   constructor(props) {
@@ -117,26 +118,28 @@ export class Calculator extends Component {
 
     return (
       <>
-        <MainContainer>
-          <LeftSide>
-            <ControlPanel
-              onHistoryClick={this.handleHistoryClick}
-            />
-            <Display result={result} input={input} />
-            <Keypad
-              onDigit={this.handleDigit}
-              onClear={this.handleClear}
-              onDelete={this.handleDelete}
-              onToggleSign={this.handleToggleSign}
-              onOperator={this.handleOperator}
-              onDecimalPoint={this.handleDecimalPoint}
-              onEqual={this.handleEqual}
-            />
-          </LeftSide>
-          {this.state.isHistoryOpen && (
-            <History history={history} />
-          )}
-        </MainContainer>
+        <ErrorBoundary>
+          <MainContainer>
+            <LeftSide>
+              <ControlPanel
+                onHistoryClick={this.handleHistoryClick}
+              />
+              <Display result={result} input={input} />
+              <Keypad
+                onDigit={this.handleDigit}
+                onClear={this.handleClear}
+                onDelete={this.handleDelete}
+                onToggleSign={this.handleToggleSign}
+                onOperator={this.handleOperator}
+                onDecimalPoint={this.handleDecimalPoint}
+                onEqual={this.handleEqual}
+              />
+            </LeftSide>
+            {this.state.isHistoryOpen && (
+              <History history={history} />
+            )}
+          </MainContainer>
+        </ErrorBoundary>
       </>
     )
   }

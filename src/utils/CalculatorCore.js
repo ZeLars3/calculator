@@ -97,11 +97,13 @@ const expressionCalculator = input => {
   }
 
   for (let i = 0; i < inputArr.length; i++) {
-    if (+inputArr[i] >= 0) firstItem.push(+inputArr[i])
-    else if (inputArr[i] === '.') {
+    if (+inputArr[i] >= 0) {
+      firstItem.push(+inputArr[i])
+    } else if (inputArr[i] === '.') {
       firstItem.push(inputArr[i])
-    } else if (inputArr[i] === '(') stack.push(inputArr[i])
-    else if (inputArr[i] === ')') {
+    } else if (inputArr[i] === '(') {
+      stack.push(inputArr[i])
+    } else if (inputArr[i] === ')') {
       while (stack[stack.length - 1] != '(') {
         if (stack.length < 1)
           throw new Error(ERROR_BRACKETS)
@@ -123,7 +125,9 @@ const expressionCalculator = input => {
     }
   }
 
-  while (stack.length > 0) firstItem.push(stack.pop())
+  while (stack.length > 0) {
+    firstItem.push(stack.pop())
+  }
   if (firstItem.includes('('))
     throw new Error(ERROR_BRACKETS)
   if (inputArr.length === 1) {
@@ -140,16 +144,16 @@ const expressionCalculator = input => {
             ),
           ),
         )
-
-        if (stack[stack.length - 1] === Infinity)
+        if (stack[stack.length - 1] === Infinity) {
           throw new Error(DIVIDE_ZERO)
+        }
       }
     }
   } else {
     if (inputArr[inputArr.length - 1] >= 0) {
       return inputArr.reduce(
-        (previousValue, currentValue) =>
-          previousValue + currentValue,
+        (prevValue, currentValue) =>
+          prevValue + currentValue,
         '',
       )
     }

@@ -7,6 +7,7 @@ import { ControlPanelFC } from './ControlPanel'
 import { MainContainer, LeftSide } from './index'
 import { expressionCalculator } from '../../utils/CalculatorCore'
 import { calculateInput } from '../../helpers'
+import { ErrorBoundary } from '../ErrorBoundary'
 
 export const CalculatorFC = () => {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
@@ -77,24 +78,26 @@ export const CalculatorFC = () => {
 
   return (
     <>
-      <MainContainer>
-        <LeftSide>
-          <ControlPanelFC
-            onHistoryClick={handleHistoryClick}
-          />
-          <DisplayFC result={result} input={input} />
-          <KeypadFC
-            onDigit={handleDigit}
-            onClear={handleClear}
-            onDelete={handleDelete}
-            onToggleSign={handleToggleSign}
-            onOperator={handleOperator}
-            onDecimalPoint={handleDecimalPoint}
-            onEqual={handleEqual}
-          />
-        </LeftSide>
-        {isHistoryOpen && <HistoryFC history={history} />}
-      </MainContainer>
+      <ErrorBoundary>
+        <MainContainer>
+          <LeftSide>
+            <ControlPanelFC
+              onHistoryClick={handleHistoryClick}
+            />
+            <DisplayFC result={result} input={input} />
+            <KeypadFC
+              onDigit={handleDigit}
+              onClear={handleClear}
+              onDelete={handleDelete}
+              onToggleSign={handleToggleSign}
+              onOperator={handleOperator}
+              onDecimalPoint={handleDecimalPoint}
+              onEqual={handleEqual}
+            />
+          </LeftSide>
+          {isHistoryOpen && <HistoryFC history={history} />}
+        </MainContainer>
+      </ErrorBoundary>
     </>
   )
 }
