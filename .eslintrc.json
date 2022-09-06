@@ -58,7 +58,7 @@
       "always-multiline"
     ],
     "prefer-const": [
-      "error",
+      "warn",
       {
         "destructuring": "any",
         "ignoreReadBeforeAssign": false

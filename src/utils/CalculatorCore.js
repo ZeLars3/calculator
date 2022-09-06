@@ -1,4 +1,4 @@
-import { ERROR_BRACKETS, DIVIDE_ZERO } from '../constants'
+import { ERRORS } from '../constants'
 
 const add = (x, y) => x + y
 const subtract = (x, y) => x - y
@@ -35,31 +35,31 @@ const Commands = {
 }
 
 function calculatorCore() {
-  const commands = []
   let current = 0
+  let commands = []
 
   return {
-    execute: command => {
-      current = command.execute(
+    execute: function (command) {
+      current = +command.execute(
         command.current,
         command.value,
       )
       commands.push(command)
       return current
     },
-    undo: () => {
-      const command = commands.pop()
-      if (commands.length === 0) {
-        return 0
-      }
 
+    undo: function () {
+      let command = commands.pop()
       current = command.undo(current, command.value)
+    },
+
+    getCurrentValue: function () {
       return current
     },
   }
 }
 
-const operations = (value, operand, currentValue) => {
+const operations = (value, currentValue, operand) => {
   switch (operand) {
     case AddCommand:
       return new Commands.AddCommand(value, currentValue)
@@ -74,7 +74,7 @@ const operations = (value, operand, currentValue) => {
   }
 }
 
-const expressionCalculator = input => {
+export const expressionCalculator = input => {
   const calculator = new calculatorCore()
   const calcPriority = {
     '+': 1,
@@ -82,6 +82,7 @@ const expressionCalculator = input => {
     '*': 2,
     '/': 2,
   }
+
   const firstItem = []
   const stack = []
   const inputArr = input
@@ -106,7 +107,7 @@ const expressionCalculator = input => {
     } else if (inputArr[i] === ')') {
       while (stack[stack.length - 1] != '(') {
         if (stack.length < 1)
-          throw new Error(ERROR_BRACKETS)
+          throw new Error(ERRORS.ErrorBrackets)
         firstItem.push(stack.pop())
       }
       stack.pop()
@@ -125,14 +126,12 @@ const expressionCalculator = input => {
     }
   }
 
-  while (stack.length > 0) {
-    firstItem.push(stack.pop())
-  }
+  while (stack.length > 0) firstItem.push(stack.pop())
   if (firstItem.includes('('))
-    throw new Error(ERROR_BRACKETS)
+    throw new Error(ERRORS.ErrorBrackets)
   if (inputArr.length === 1) {
     for (let i = 0; i < firstItem.length; i++) {
-      if (typeof firstItem[i] === Number)
+      if (typeof firstItem[i] === 'number')
         stack.push(firstItem[i])
       else {
         stack.push(
@@ -144,21 +143,20 @@ const expressionCalculator = input => {
             ),
           ),
         )
+
         if (stack[stack.length - 1] === Infinity) {
-          throw new Error(DIVIDE_ZERO)
+          throw new Error(ERRORS.DivideZero)
         }
       }
     }
   } else {
     if (inputArr[inputArr.length - 1] >= 0) {
       return inputArr.reduce(
-        (prevValue, currentValue) =>
-          prevValue + currentValue,
+        (previousValue, currentValue) =>
+          previousValue + currentValue,
         '',
       )
     }
   }
   return inputArr[0]
 }
-
-export { expressionCalculator }

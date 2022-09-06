@@ -1,8 +1,8 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
-import { Settings, SettingsFC } from './screens/Settings'
+import { Settings } from './screens/Settings'
 import { Error } from './screens/Error'
 import { Header } from './components/Header'
 import {
@@ -13,13 +13,13 @@ import {
   coloredTheme,
   darkTheme,
   lightTheme,
-} from './theme'
+} from './styles'
 import {
   HOME_PAGE_ROUTE_CL,
   HOME_PAGE_ROUTE_FC,
-  SETTINGS_PAGE_ROUTE_CL,
-  SETTINGS_PAGE_ROUTE_FC,
+  SETTINGS_PAGE_ROUTE,
 } from './constants'
+import { ThemeContext } from './utils'
 
 export const App = () => {
   const [theme, setTheme] = useState(lightTheme)
@@ -40,33 +40,27 @@ export const App = () => {
   }
 
   return (
-    <Fragment>
-      <ThemeProvider theme={theme}>
-        <Header />
-        <Routes>
-          <Route
-            path={HOME_PAGE_ROUTE_CL}
-            element={<Calculator />}
-          />
-          <Route
-            path={SETTINGS_PAGE_ROUTE_CL}
-            element={
-              <Settings handleThemeChange={toggleTheme} />
-            }
-          />
-          <Route
-            path={HOME_PAGE_ROUTE_FC}
-            element={<CalculatorFC />}
-          />
-          <Route
-            path={SETTINGS_PAGE_ROUTE_FC}
-            element={
-              <SettingsFC handleThemeChange={toggleTheme} />
-            }
-          />
-          <Route path="*" element={<Error />} />
-        </Routes>
-      </ThemeProvider>
-    </Fragment>
+    <>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeProvider theme={theme}>
+          <Header />
+          <Routes>
+            <Route
+              path={HOME_PAGE_ROUTE_CL}
+              element={<Calculator />}
+            />
+            <Route
+              path={HOME_PAGE_ROUTE_FC}
+              element={<CalculatorFC />}
+            />
+            <Route
+              path={SETTINGS_PAGE_ROUTE}
+              element={<Settings />}
+            />
+            <Route path="*" element={<Error />} />
+          </Routes>
+        </ThemeProvider>
+      </ThemeContext.Provider>
+    </>
   )
 }

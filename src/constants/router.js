@@ -1,11 +1,3 @@
-const HOME_PAGE_ROUTE_CL = '/'
-const SETTINGS_PAGE_ROUTE_CL = '/settings-cl'
-const HOME_PAGE_ROUTE_FC = '/fc'
-const SETTINGS_PAGE_ROUTE_FC = '/settings-fc'
-
-export {
-  HOME_PAGE_ROUTE_CL,
-  SETTINGS_PAGE_ROUTE_CL,
-  HOME_PAGE_ROUTE_FC,
-  SETTINGS_PAGE_ROUTE_FC,
-}
+export const HOME_PAGE_ROUTE_CL = '/'
+export const HOME_PAGE_ROUTE_FC = '/fc'
+export const SETTINGS_PAGE_ROUTE = '/settings'
