@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import { DisplayInfo, DisplayResult } from './styled'
+import { DisplayInfo, DisplayResult } from '../styled'
 
 export const DisplayFC = ({ input, result }) => {
   return (

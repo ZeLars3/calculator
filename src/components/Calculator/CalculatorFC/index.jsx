@@ -1,25 +1,70 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { DisplayFC } from '../../Display'
 import { HistoryFC } from '../../History'
 import { KeypadFC } from '../../Keypad'
 import { ErrorBoundary } from '../../ErrorBoundary'
 import { ControlPanelFC } from '../../ControlPanel'
-import { MainContainer, LeftSide } from './styled'
+import {
+  MainContainer,
+  LeftSide,
+  Container,
+} from '../styled'
 import { expressionCalculator } from '../../../utils'
 import {
   calculateInput,
   expressionHelper,
+  saveExpressionToStorage,
 } from '../../../helpers'
 
+const getStartValue = key => {
+  const keyDataLS = JSON.parse(localStorage.getItem(key))
+  return keyDataLS ? keyDataLS : []
+}
+
 export const CalculatorFC = () => {
-  const [expression, setExpression] = useState('')
+  const [expression, setExpression] = useState(
+    getStartValue('lastInput'),
+  )
   const [result, setResult] = useState('')
-  const [history, setHistory] = useState([])
+  const [history, setHistory] = useState(
+    getStartValue('history'),
+  )
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
+  const [equal, setEqual] = useState(false)
+
+  useEffect(() => setExpression(result), [equal])
+
+  useEffect(
+    () =>
+      localStorage.setItem(
+        'lastInput',
+        JSON.stringify(expression),
+      ),
+    [expression],
+  )
+
+  useEffect(() => {
+    setHistory(getStartValue('history'))
+    setExpression(getStartValue('lastInput'))
+  }, [])
+
+  useEffect(
+    () =>
+      localStorage.setItem(
+        'history',
+        JSON.stringify(history),
+      ),
+    [history],
+  )
 
   const handleHistoryClick = () => {
     setIsHistoryOpen(!isHistoryOpen)
+  }
+
+  const deleteAllHistory = () => {
+    setHistory([])
+    localStorage.setItem('history', JSON.stringify([]))
   }
 
   const keypadHandle = event => {
@@ -49,11 +94,13 @@ export const CalculatorFC = () => {
       }
       case '=': {
         try {
+          setEqual(equal => !equal)
           setResult(
             expressionCalculator(
               calculateInput(expression),
             ),
           )
+          saveExpressionToStorage(expression, result)
           setHistory(
             history.concat([{ expression, result }]),
           )
@@ -101,15 +148,23 @@ export const CalculatorFC = () => {
   return (
     <>
       <ErrorBoundary>
-        <MainContainer>
+        <MainContainer
+          className={isHistoryOpen ? 'open' : ''}>
           <LeftSide>
-            <ControlPanelFC
-              onHistoryClick={handleHistoryClick}
-            />
             <DisplayFC result={result} input={expression} />
-            <KeypadFC keypadHandle={keypadHandle} />
+            <Container>
+              <KeypadFC keypadHandle={keypadHandle} />
+              <ControlPanelFC
+                onHistoryClick={handleHistoryClick}
+              />
+            </Container>
           </LeftSide>
-          {isHistoryOpen && <HistoryFC history={history} />}
+          {isHistoryOpen && (
+            <HistoryFC
+              history={history}
+              deleteAllHistory={deleteAllHistory}
+            />
+          )}
         </MainContainer>
       </ErrorBoundary>
     </>

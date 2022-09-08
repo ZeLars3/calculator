@@ -6,6 +6,7 @@ export const HistoryButton = styled.button`
   padding: 5px;
   margin: 5px;
   max-width: 200px;
+  max-height: 40px;
   background: ${({ theme }) => theme.navBar.primary};
   color: ${({ theme }) => theme.textColor.primary};
   font-family: 'Kanit', sans-serif;

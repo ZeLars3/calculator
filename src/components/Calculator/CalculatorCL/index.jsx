@@ -4,22 +4,68 @@ import { Display } from '../../Display/DisplayCl'
 import { History } from '../../History'
 import { Keypad } from '../../Keypad'
 import { ControlPanel } from '../../ControlPanel'
-import { MainContainer, LeftSide } from './styled'
+import {
+  MainContainer,
+  LeftSide,
+  Container,
+} from '../styled'
 import { expressionCalculator } from '../../../utils/CalculatorCore'
 import {
   calculateInput,
   expressionHelper,
+  saveExpressionToStorage,
 } from '../../../helpers'
+
+const getStartValue = key => {
+  const keyDataStorage = JSON.parse(
+    localStorage.getItem(key),
+  )
+
+  return keyDataStorage ? keyDataStorage : []
+}
+
+const setDataToStorage = key => {
+  localStorage.setItem(
+    key,
+    JSON.stringify(getStartValue(key)),
+  )
+}
 
 export class Calculator extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      expression: '',
+      expression: getStartValue('lastInput'),
       result: '',
-      history: [],
+      history: getStartValue('history'),
       isHistoryOpen: false,
+      equal: false,
+    }
+  }
+
+  componentDidMount() {
+    setDataToStorage('lastInput')
+    setDataToStorage('history')
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { result, expression, history, equal } =
+      this.state
+    if (prevState.equal != equal) {
+      this.setState({ expression: result })
+    }
+    if (prevState.history != history) {
+      localStorage.setItem(
+        'history',
+        JSON.stringify(history),
+      )
+    }
+    if (prevState.expression != expression) {
+      localStorage.setItem(
+        'lastInput',
+        JSON.stringify(expression),
+      )
     }
   }
 
@@ -33,8 +79,13 @@ export class Calculator extends Component {
     this.setState({ expression: exp })
   }
 
+  deleteAllHistory = () => {
+    this.setState({ history: [] })
+    localStorage.setItem('history', JSON.stringify([]))
+  }
+
   keypadHandle = event => {
-    const { expression } = this.state
+    const { expression, result } = this.state
 
     const lastChar = expression
       .toString()
@@ -66,7 +117,10 @@ export class Calculator extends Component {
 
     switch (event.target.textContent) {
       case 'CE': {
-        this.setState({ expression: '' })
+        this.setState({
+          expression: '',
+          result: '',
+        })
         break
       }
       case 'C': {
@@ -82,6 +136,9 @@ export class Calculator extends Component {
       }
       case '=': {
         try {
+          this.setState(({ equal }) => {
+            return { equal: !equal }
+          })
           this.setState(({ expression }) => {
             return expression
           })
@@ -90,6 +147,7 @@ export class Calculator extends Component {
               result: expressionCalculator(expression),
             }
           })
+          saveExpressionToStorage(expression, result)
           this.setState(
             ({ history, expression, result }) => {
               return {
@@ -130,23 +188,33 @@ export class Calculator extends Component {
   }
 
   render() {
-    const { result, expression, history } = this.state
+    const { result, expression, history, isHistoryOpen } =
+      this.state
 
     return (
       <>
-        <MainContainer>
+        <MainContainer
+          className={isHistoryOpen ? 'open' : ''}>
           <LeftSide>
-            <ControlPanel
-              onHistoryClick={this.handleHistoryClick}
-            />
             <Display
               result={result.toString()}
               input={expression.toString()}
             />
-            <Keypad keypadHandle={this.keypadHandle} />
+            <Container>
+              <Keypad keypadHandle={this.keypadHandle} />
+              <ControlPanel
+                isHistoryOpen={isHistoryOpen}
+                onHistoryClick={this.handleHistoryClick}
+              />
+            </Container>
           </LeftSide>
           {this.state.isHistoryOpen && (
-            <History history={history} />
+            <>
+              <History
+                history={history}
+                deleteAllHistory={this.deleteAllHistory}
+              />
+            </>
           )}
         </MainContainer>
       </>

@@ -3,7 +3,7 @@ import { Component } from 'react'
 import { v4 as uuidV4 } from 'uuid'
 
 import { KEYS } from '../../../constants'
-import { KeypadButton, KeypadContainer } from './styled'
+import { KeypadButton, KeypadContainer } from '../styled'
 
 export class Keypad extends Component {
   constructor(props) {

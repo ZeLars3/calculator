@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 
@@ -21,8 +21,23 @@ import {
 } from './constants'
 import { ThemeContext } from './utils'
 
+const getStartValue = key => {
+  const keyDataLS = JSON.parse(localStorage.getItem(key))
+  return keyDataLS ? keyDataLS : []
+}
+
 export const App = () => {
-  const [theme, setTheme] = useState(lightTheme)
+  const [theme, setTheme] = useState(getStartValue('theme'))
+
+  useEffect(() => {
+    setTheme(getStartValue('theme'))
+  }, [])
+
+  useEffect(
+    () =>
+      localStorage.setItem('theme', JSON.stringify(theme)),
+    [theme],
+  )
 
   const toggleTheme = event => {
     const { value } = event.target

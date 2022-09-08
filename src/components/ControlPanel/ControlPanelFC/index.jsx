@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-import { HistoryButton } from './styled'
+import { HistoryButton } from '../styled'
 
 export const ControlPanelFC = ({
   isHistoryOpen,
@@ -8,7 +8,7 @@ export const ControlPanelFC = ({
 }) => {
   return (
     <HistoryButton onClick={onHistoryClick}>
-      {isHistoryOpen ? 'Hide' : 'Show'} history
+        {isHistoryOpen ? '▷' : '◁'}
     </HistoryButton>
   )
 }

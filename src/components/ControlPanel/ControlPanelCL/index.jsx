@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import { Component } from 'react'
 
-import { HistoryButton } from './styled'
+import { HistoryButton } from '../styled'
 
 export class ControlPanel extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export class ControlPanel extends Component {
 
     return (
       <HistoryButton onClick={onHistoryClick}>
-        {isHistoryOpen ? 'Hide' : 'Show'} history
+        {isHistoryOpen ? '▷' : '◁'}
       </HistoryButton>
     )
   }

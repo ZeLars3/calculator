@@ -1,5 +1,9 @@
+const parse = str => {
+  return Function(`'use strict'; return (${str})`)()
+}
+
 export const calculateInput = input =>
-  (Math.round(eval(input) * 1000) / 1000).toString()
+  (Math.round(parse(input) * 1000) / 1000).toString()
 
 export const expressionHelper = (
   temp,
