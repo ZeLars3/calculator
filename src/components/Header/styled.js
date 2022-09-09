@@ -7,7 +7,7 @@ export const HeaderBlock = styled.header`
   align-items: center;
   padding: 32px 42px;
   max-height: 120px;
-  background: ${({ theme }) => theme.navBar.primary};
+  background: ${({ theme }) => theme.colors.header};
   color: white;
   border: 1px solid #707070;
   font-family: 'Kanit', sans-serif;

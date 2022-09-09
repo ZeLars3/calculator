@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const MainContainer = styled.div`
   padding: 5px 15px;
   background: ${({ theme }) =>
-    theme.backgroundColor.primary};
+    theme.colors.backgroundColor};
 
   &.open {
     display: grid;

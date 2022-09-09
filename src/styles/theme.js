@@ -61,61 +61,31 @@ export const theme = {
 }
 
 export const lightTheme = {
-  ...theme,
   colors: {
-    primary: light,
-    hover: gray,
-  },
-  textColor: {
-    primary: white,
-  },
-  button: {
-    primary: white,
-  },
-  navBar: {
-    primary: darkGray,
-  },
-  backgroundColor: {
-    primary: white,
+      header: darkGray,
+      background: darkGray,
+      backgroundHover: gray,
+      backgroundColor: white,
+      text: white,
   },
 }
 
 export const darkTheme = {
-  ...theme,
   colors: {
-    primary: light,
-    hover: gray,
-  },
-  textColor: {
-    primary: white,
-  },
-  button: {
-    primary: white,
-  },
-  navBar: {
-    primary: darkGray,
-  },
-  backgroundColor: {
-    primary: lightGray,
+      header: darkGray,
+      background: darkGray,
+      backgroundHover: gray,
+      backgroundColor: lightGray,
+      text: white,
   },
 }
 
 export const coloredTheme = {
-  ...theme,
   colors: {
-    primary: yellowGreen,
-    hover: gray,
-  },
-  textColor: {
-    primary: white,
-  },
-  button: {
-    primary: yellowGreen,
-  },
-  navBar: {
-    primary: yellowGreen,
-  },
-  backgroundColor: {
-    primary: white,
+      header: yellowGreen,
+      background: yellowGreen,
+      backgroundHover: gray,
+      backgroundColor: white,
+      text: white,
   },
 }

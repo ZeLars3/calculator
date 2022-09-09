@@ -7,13 +7,13 @@ export const HistoryButton = styled.button`
   margin: 5px;
   max-width: 200px;
   max-height: 40px;
-  background: ${({ theme }) => theme.navBar.primary};
-  color: ${({ theme }) => theme.textColor.primary};
+  background: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   font-family: 'Kanit', sans-serif;
   font-size: 20px;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.hover};
+    background: ${({ theme }) => theme.colors.backgroundHover};
     color: white;
   }
 `

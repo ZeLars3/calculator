@@ -19,7 +19,7 @@ import {
   HOME_PAGE_ROUTE_FC,
   SETTINGS_PAGE_ROUTE,
 } from './constants'
-import { ThemeContext } from './utils'
+import { ThemeContext, THEMES } from './utils'
 
 const getStartValue = key => {
   const keyDataLS = JSON.parse(localStorage.getItem(key))
@@ -27,7 +27,7 @@ const getStartValue = key => {
 }
 
 export const App = () => {
-  const [theme, setTheme] = useState(getStartValue('theme'))
+  const [theme, setTheme] = useState(THEMES.light)
 
   useEffect(() => {
     setTheme(getStartValue('theme'))
@@ -57,7 +57,7 @@ export const App = () => {
   return (
     <>
       <ThemeContext.Provider value={{ theme, toggleTheme }}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={() => theme}>
           <Header />
           <Routes>
             <Route

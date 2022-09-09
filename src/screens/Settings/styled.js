@@ -14,13 +14,13 @@ export const ClearButton = styled.button`
   border-radius: 8px;
   cursor: pointer;
   text-align: start;
-  background: ${({ theme }) => theme.navBar.primary};
-  color: ${({ theme }) => theme.textColor.primary};
+  background: ${({ theme }) => theme.colors.background};
+  color: ${({ theme }) => theme.colors.text};
   font: normal normal normal 32px/38px 'Kanit', sans-serif;
   border: 2px solid #434343;
 
   &:hover {
-    background: ${({ theme }) => theme.colors.hover};
+    background: ${({ theme }) => theme.colors.backgroundHover};
     color: white;
   }
 `
